@@ -24,6 +24,10 @@ Ignore the connections limit for `domains` list separated by `,`.
 
 Disables the disk cache for HTTP requests.
 
+### --disable-ntlm-v2
+
+Disables NTLM v2 for posix platforms, no effect elsewhere.
+
 ## --disable-http2
 
 Disable HTTP/2 and SPDY/3.1 protocols.
