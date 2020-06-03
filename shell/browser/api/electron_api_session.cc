@@ -590,10 +590,15 @@ void Session::AllowNTLMCredentialsForDomains(const std::string& domains) {
 
 void Session::SetUserAgent(const std::string& user_agent,
                            gin::Arguments* args) {
+  std::string accept_lang = g_browser_process->GetApplicationLocale();
+  args->GetNext(&accept_lang);
+
   browser_context_->SetUserAgent(user_agent);
-  content::BrowserContext::GetDefaultStoragePartition(browser_context_.get())
-      ->GetNetworkContext()
-      ->SetUserAgent(user_agent);
+  auto* network_context = content::BrowserContext::GetDefaultStoragePartition(
+                              browser_context_.get())
+                              ->GetNetworkContext();
+  network_context->SetUserAgent(user_agent);
+  network_context->SetAcceptLanguage(accept_lang);
 }
 
 std::string Session::GetUserAgent() {
